@@ -1,0 +1,1 @@
+This repository contains a library able of identifying known programs to register them and allow them to be updated.
