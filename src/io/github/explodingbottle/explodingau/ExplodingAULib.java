@@ -41,7 +41,7 @@ public class ExplodingAULib {
 		throw new IllegalAccessError("Cannot construct this class.");
 	}
 
-	private static final String EXPLODING_AU_VERSION = "1.0.0.0";
+	private static final String EXPLODING_AU_VERSION = "1.0.0.0_OR";
 
 	/**
 	 * Computes the hash of a file.
@@ -74,7 +74,7 @@ public class ExplodingAULib {
 	 * @return The folder or null if error.
 	 */
 	public static File seekAUFolder() {
-		File fold = new File(System.getProperty("user.home"), ".explodingau");
+		File fold = new File(System.getenv("APPDATA"), "OverRender OverSuite");
 		if (!fold.exists()) {
 			if (fold.mkdir()) {
 				return fold;
@@ -140,6 +140,18 @@ public class ExplodingAULib {
 		}
 	}
 
+	public static void standardProgramRoutine(String programName, File overrideFile) {
+		File auFolder = seekAUFolder();
+		if (auFolder != null) {
+			Properties lk = loadPropsFromAUFolder(auFolder);
+			if (lk == null) {
+				lk = new Properties();
+			}
+			fileCfgRoutine(programName, lk, overrideFile);
+			storePropsToAUFolder(auFolder, lk);
+		}
+	}
+
 	/**
 	 * Starts the routine to update the list.
 	 * 
@@ -148,6 +160,18 @@ public class ExplodingAULib {
 	 * @return If we managed to do the update.
 	 */
 	public static void fileCfgRoutine(String programName, Properties props) {
+		fileCfgRoutine(programName, props, null);
+	}
+
+	/**
+	 * Starts the routine to update the list.
+	 * 
+	 * @param programName  The program identifier.
+	 * @param props        The loaded properties
+	 * @param overridePath Where to find the file to hash.
+	 * @return If we managed to do the update.
+	 */
+	public static void fileCfgRoutine(String programName, Properties props, File overridePath) {
 
 		final Properties loaded = props;
 		ArrayList<String> toRemove = new ArrayList<String>();
