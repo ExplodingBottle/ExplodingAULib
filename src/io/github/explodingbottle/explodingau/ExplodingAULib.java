@@ -126,15 +126,12 @@ public class ExplodingAULib {
 	public static void standardProgramRoutine(String programName, File overrideFile) {
 		File auFolder = seekAUFolder();
 		if (auFolder != null) {
-			System.out.println("AU Folder exists: OK");
 			Properties lk = loadPropsFromAUFolder(auFolder);
 			if (lk == null) {
 				lk = new Properties();
 			}
 			fileCfgRoutine(programName, lk, overrideFile);
 			storePropsToAUFolder(auFolder, lk);
-		} else {
-			System.out.println("AU Folder exists: FAIL");
 		}
 	}
 
