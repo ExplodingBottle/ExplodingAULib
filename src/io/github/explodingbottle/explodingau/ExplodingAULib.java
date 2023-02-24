@@ -198,8 +198,13 @@ public class ExplodingAULib {
 		});
 		if (programName != null) {
 			try {
-				File location = new File(
-						ExplodingAULib.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+				File location = null;
+				if (overridePath != null) {
+					location = overridePath;
+				} else {
+					location = new File(
+							ExplodingAULib.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+				}
 				if (location != null && !location.isDirectory()) {
 					String fHash = hashFile(location);
 					loaded.put(location.getAbsolutePath(), programName + ";" + fHash);
